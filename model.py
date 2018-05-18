@@ -58,7 +58,8 @@ class CharRnn(object):
     def train(self, num_iterations):
         saver = tf.train.Saver()
         variables_init_op = tf.global_variables_initializer()
-
+        utils.safe_mkdir("graph/")
+        writer = tf.summary.FileWriter(logdir="graph/", graph=tf.get_default_graph())
 
         with tf.Session() as sess:
             # initialize variables
@@ -80,3 +81,5 @@ class CharRnn(object):
                 except tf.errors.OutOfRangeError:
                     print("we got out of range error")
                     print("we gotta re initialize the dataset")
+
+        writer.close()
