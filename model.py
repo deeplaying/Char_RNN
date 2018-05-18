@@ -27,6 +27,7 @@ class CharRnn(object):
             self.init_iterator = iterator.make_initializer(dataset=self.dataset)
 
 
+
     def _create_inference(self):
         with tf.name_scope("inference"):
             # current model does not support padding so will ignore that for now
