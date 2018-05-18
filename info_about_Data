@@ -1,0 +1,14 @@
+this is to understand the current model in cs20
+so right now, every tweet is on one line, we loop over them tweet by tweet
+then we encode every tweet to numbers (indices), and divide them into chunks, each chunk is 50 char controlled by params num_steps
+the next chucnk is controlled by overlap, so if we have 100 chars, we get 0->25, 25->75, 50->100, and if it 110, the last 10 is ignored (i should fix that by using padding)
+
+
+now let's find out how training happens, do we do char predict next char, or bunch of chars predict one right after?
+so self.seq = batch which is [batch_size, num_steps] -> [64,50]
+we know that training data in nlp or in RNN in general got to be [batch_size, time_steps, data_dimension], so we are missing data_dim atm
+so when creating the model we do tf.one_hot(self.seq, len(self.vocab) that would get us the dims right 3d
+it is one char by one char basis given by the loss
+
+        loss = tf.nn.softmax_cross_entropy_with_logits(logits=self.logits[:, :-1],
+                                                        labels=seq[:, 1:])
